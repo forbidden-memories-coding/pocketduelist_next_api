@@ -1,0 +1,232 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "description" : "PocketDuelist.pw API",
+    "version" : "2.0.0",
+    "title" : "PocketDuelist.pw API",
+    "contact" : {
+      "email" : "help@pocketduelist.pw"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "public",
+    "description" : "Operations available to regular users"
+  } ],
+  "paths" : {
+    "/card" : {
+      "get" : {
+        "tags" : [ "public" ],
+        "summary" : "searches for one or multiple cards",
+        "operationId" : "searchCard",
+        "description" : "By passing in the appropriate options, you can search for\nCards\n",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "search",
+          "description" : "pass an optional search string for looking up one or multiple cards by Id or Name",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "fields",
+          "description" : "what fields to return (see card_item schema for fields)",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/card_item"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "servers" : [ {
+    "url" : "https://pocketduelist.pw/api"
+  } ],
+  "components" : {
+    "schemas" : {
+      "card_item" : {
+        "type" : "object",
+        "required" : [ "card_id", "card_name" ],
+        "properties" : {
+          "card_id" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "card_name" : {
+            "type" : "string",
+            "example" : "Kuriboh"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "dummy description"
+          },
+          "guardian_star_1" : {
+            "type" : "string",
+            "example" : "Sun"
+          },
+          "guardian_star_2" : {
+            "type" : "string",
+            "example" : "Moon"
+          },
+          "level" : {
+            "type" : "integer",
+            "example" : 3
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "Magic"
+          },
+          "attack" : {
+            "type" : "integer",
+            "example" : 1000
+          },
+          "defense" : {
+            "type" : "integer",
+            "example" : 500
+          },
+          "attribute" : {
+            "type" : "string",
+            "example" : "Fiend"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : 123456789
+          },
+          "starchip_cost" : {
+            "type" : "integer",
+            "example" : 30
+          }
+        }
+      },
+      "fusion_item" : {
+        "type" : "object",
+        "required" : [ "fusion_card_id", "card_id_material_1", "card_id_material_2", "card_result_id" ],
+        "properties" : {
+          "fusion_card_id" : {
+            "type" : "integer"
+          },
+          "card_id_material_1" : {
+            "type" : "integer"
+          },
+          "card_id_material_2" : {
+            "type" : "integer"
+          },
+          "card_result_id" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "equip_item" : {
+        "type" : "object",
+        "required" : [ "equip_id", "card_id_equip", "card_id_user" ],
+        "properties" : {
+          "equip_id" : {
+            "type" : "integer"
+          },
+          "card_id_equip" : {
+            "type" : "integer"
+          },
+          "card_id_user" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "drop_item" : {
+        "type" : "object",
+        "required" : [ "duelist_id", "pool_type", "card_id", "card_probability" ],
+        "properties" : {
+          "pool_id" : {
+            "type" : "integer"
+          },
+          "duelist_id" : {
+            "type" : "integer"
+          },
+          "pool_type" : {
+            "type" : "string"
+          },
+          "card_id" : {
+            "type" : "integer"
+          },
+          "card_probability" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "duelist_item" : {
+        "type" : "object",
+        "required" : [ "duelist_id", "duelist_name" ],
+        "properties" : {
+          "duelist_id" : {
+            "type" : "integer"
+          },
+          "duelist_name" : {
+            "type" : "string"
+          },
+          "hand_size" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "ritual_item" : {
+        "type" : "object",
+        "required" : [ "ritual_id", "card_id_material_1", "card_id_material_2", "card_id_result" ],
+        "properties" : {
+          "ritual_id" : {
+            "type" : "integer"
+          },
+          "card_id_material_1" : {
+            "type" : "integer"
+          },
+          "card_id_material_2" : {
+            "type" : "integer"
+          },
+          "card_id_material_3" : {
+            "type" : "integer"
+          },
+          "card_id_result" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "starterdeck_item" : {
+        "type" : "object",
+        "required" : [ "pool_id" ],
+        "properties" : {
+          "starterdeck_id" : {
+            "type" : "integer"
+          },
+          "pool_id" : {
+            "type" : "integer"
+          },
+          "card_id" : {
+            "type" : "integer"
+          },
+          "probability" : {
+            "type" : "integer"
+          }
+        }
+      }
+    }
+  }
+}
